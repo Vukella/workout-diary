@@ -9,25 +9,25 @@ part of 'log_provider.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(workoutLogProvider)
-final workoutLogProviderProvider = WorkoutLogProviderProvider._();
+@ProviderFor(workoutLogRepository)
+final workoutLogRepositoryProvider = WorkoutLogRepositoryProvider._();
 
-final class WorkoutLogProviderProvider
+final class WorkoutLogRepositoryProvider
     extends $FunctionalProvider<LogRepository, LogRepository, LogRepository>
     with $Provider<LogRepository> {
-  WorkoutLogProviderProvider._()
+  WorkoutLogRepositoryProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'workoutLogProviderProvider',
+        name: r'workoutLogRepositoryProvider',
         isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$workoutLogProviderHash();
+  String debugGetCreateSourceHash() => _$workoutLogRepositoryHash();
 
   @$internal
   @override
@@ -36,7 +36,7 @@ final class WorkoutLogProviderProvider
 
   @override
   LogRepository create(Ref ref) {
-    return workoutLogProvider(ref);
+    return workoutLogRepository(ref);
   }
 
   /// {@macro riverpod.override_with_value}
@@ -48,5 +48,5 @@ final class WorkoutLogProviderProvider
   }
 }
 
-String _$workoutLogProviderHash() =>
-    r'3b68a7dffb8110a9b491c8d0fdeae5150da0f84f';
+String _$workoutLogRepositoryHash() =>
+    r'f421368849e665904fd01e081f02552962faa589';

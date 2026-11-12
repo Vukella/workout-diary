@@ -1,18 +1,8 @@
-import 'package:workout_diary/core/database/app_database.dart';
+import 'package:workout_diary/features/machine/data/machine.dart';
 
 abstract class MachineRepository {
-  // Live list for the machine picker screen —
-  // rebuilds automatically when exercises are added or changed
-  Stream<List<MachineData>> watchAll();
-
-  // One-time lookup before navigating to a detail screen —
-  // returns null if the ID doesn't exist
-  Future<MachineData?> getById(int id);
-
-  // Persists a new machine (or updates an existing one) —
-  // returns nothing, just completes when done
-  Future<void> save(MachineData machine);
-
-  // Removes a machine by ID
+  Stream<List<Machine>> watchAll();
+  Future<Machine?> getById(int id);
+  Future<void> save(Machine machine);
   Future<void> delete(int id);
 }

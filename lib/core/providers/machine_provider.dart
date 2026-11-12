@@ -7,7 +7,7 @@ import '../repositories/machine_repository.dart';
 part 'machine_provider.g.dart';
 
 @Riverpod(keepAlive: true)
-MachineRepository machineProvider(Ref ref){
-  final db = ref.watch(appDatabaseProviderProvider);
+MachineRepository machineRepository(Ref ref){
+  final db = ref.watch(appDatabaseProvider);
   return DriftMachineRepository(db);
 }

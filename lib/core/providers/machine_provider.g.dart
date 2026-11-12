@@ -9,10 +9,10 @@ part of 'machine_provider.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(machineProvider)
-final machineProviderProvider = MachineProviderProvider._();
+@ProviderFor(machineRepository)
+final machineRepositoryProvider = MachineRepositoryProvider._();
 
-final class MachineProviderProvider
+final class MachineRepositoryProvider
     extends
         $FunctionalProvider<
           MachineRepository,
@@ -20,19 +20,19 @@ final class MachineProviderProvider
           MachineRepository
         >
     with $Provider<MachineRepository> {
-  MachineProviderProvider._()
+  MachineRepositoryProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'machineProviderProvider',
+        name: r'machineRepositoryProvider',
         isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$machineProviderHash();
+  String debugGetCreateSourceHash() => _$machineRepositoryHash();
 
   @$internal
   @override
@@ -42,7 +42,7 @@ final class MachineProviderProvider
 
   @override
   MachineRepository create(Ref ref) {
-    return machineProvider(ref);
+    return machineRepository(ref);
   }
 
   /// {@macro riverpod.override_with_value}
@@ -54,4 +54,4 @@ final class MachineProviderProvider
   }
 }
 
-String _$machineProviderHash() => r'e248442cd9855b958b48333d3db90f92baa182cd';
+String _$machineRepositoryHash() => r'9fbb712471de3b388af6032ad249fde709feddfb';

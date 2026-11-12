@@ -7,7 +7,7 @@ import '../repositories/log_repository.dart';
 part 'log_provider.g.dart';
 
 @Riverpod(keepAlive: true)
-LogRepository workoutLogProvider(Ref ref){
-  final db = ref.watch(appDatabaseProviderProvider);
+LogRepository workoutLogRepository(Ref ref){
+  final db = ref.watch(appDatabaseProvider);
   return DriftLogRepository(db);
 }

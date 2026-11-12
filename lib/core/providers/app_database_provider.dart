@@ -5,6 +5,6 @@ import 'package:workout_diary/core/database/app_database.dart';
 part 'app_database_provider.g.dart';
 
 @Riverpod(keepAlive: true)
-AppDatabase appDatabaseProvider(Ref ref){
+AppDatabase appDatabase(Ref ref){
   return AppDatabase();
 }

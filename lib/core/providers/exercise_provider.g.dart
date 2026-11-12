@@ -9,10 +9,10 @@ part of 'exercise_provider.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(exerciseProvider)
-final exerciseProviderProvider = ExerciseProviderProvider._();
+@ProviderFor(exerciseRepository)
+final exerciseRepositoryProvider = ExerciseRepositoryProvider._();
 
-final class ExerciseProviderProvider
+final class ExerciseRepositoryProvider
     extends
         $FunctionalProvider<
           ExerciseRepository,
@@ -20,19 +20,19 @@ final class ExerciseProviderProvider
           ExerciseRepository
         >
     with $Provider<ExerciseRepository> {
-  ExerciseProviderProvider._()
+  ExerciseRepositoryProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'exerciseProviderProvider',
+        name: r'exerciseRepositoryProvider',
         isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$exerciseProviderHash();
+  String debugGetCreateSourceHash() => _$exerciseRepositoryHash();
 
   @$internal
   @override
@@ -42,7 +42,7 @@ final class ExerciseProviderProvider
 
   @override
   ExerciseRepository create(Ref ref) {
-    return exerciseProvider(ref);
+    return exerciseRepository(ref);
   }
 
   /// {@macro riverpod.override_with_value}
@@ -54,4 +54,5 @@ final class ExerciseProviderProvider
   }
 }
 
-String _$exerciseProviderHash() => r'b010e86e46775082073a16b22b6132c8c4d313fc';
+String _$exerciseRepositoryHash() =>
+    r'667e2b908b9bcc4295f75434d912ec55e69675da';

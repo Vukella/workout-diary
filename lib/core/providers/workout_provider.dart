@@ -7,7 +7,7 @@ import '../repositories/workout_repository.dart';
 part 'workout_provider.g.dart';
 
 @Riverpod(keepAlive: true)
-WorkoutRepository workoutProvider(Ref ref){
-  final db = ref.watch(appDatabaseProviderProvider);
+WorkoutRepository workoutRepository(Ref ref){
+  final db = ref.watch(appDatabaseProvider);
   return DriftWorkoutRepository(db);
 }
