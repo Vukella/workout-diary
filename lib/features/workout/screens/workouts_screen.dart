@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:workout_diary/core/database/app_database.dart';
+import 'package:go_router/go_router.dart';
 import 'package:workout_diary/core/theme/app_theme.dart';
 import 'package:workout_diary/features/workout/providers/workouts_provider.dart';
 
@@ -16,15 +16,10 @@ class WorkoutsScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Workouts'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () {
-              // TODO: navigate to create workout screen
-            },
-          ),
-        ],
       ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () => context.push('/workouts/create'),
+          child: const Icon(Icons.add)),
       body: workoutsAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, _) => Center(child: Text('Error: $error')),
@@ -90,9 +85,7 @@ class _WorkoutCard extends StatelessWidget {
               ?.copyWith(fontWeight: FontWeight.w600),
         ),
         trailing: const Icon(Icons.chevron_right, color: AppTheme.onSurfaceMuted),
-        onTap: () {
-          // TODO: navigate to workout detail
-        },
+        onTap: () => context.push('/workouts/${workout.id!}'),
       ),
     );
   }

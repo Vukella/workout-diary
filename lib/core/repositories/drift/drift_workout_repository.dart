@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:workout_diary/core/database/app_database.dart' hide Workout;
 import 'package:workout_diary/core/repositories/workout_repository.dart';
 import 'package:workout_diary/features/workout/data/workout.dart';
+import 'package:workout_diary/features/workout/data/workout_exercise_entry.dart';
 
 class DriftWorkoutRepository implements WorkoutRepository {
   final AppDatabase _db;
@@ -9,7 +10,7 @@ class DriftWorkoutRepository implements WorkoutRepository {
   DriftWorkoutRepository(this._db);
 
   Workout _toWorkout(WorkoutData row) =>
-      Workout(id: row.id, name: row.name);
+      Workout(id: row.id, name: row.name, description: row.description);
 
   @override
   Stream<List<Workout>> watchAll() {
@@ -29,8 +30,9 @@ class DriftWorkoutRepository implements WorkoutRepository {
   Future<void> save(Workout workout) {
     return _db.into(_db.workout).insertOnConflictUpdate(
       WorkoutCompanion(
-        id: Value(workout.id),
-        name: Value(workout.name),
+          id: workout.id != null ? Value(workout.id!) : const Value.absent(),
+          name: Value(workout.name),
+        description: Value(workout.description)
       ),
     );
   }
@@ -39,5 +41,36 @@ class DriftWorkoutRepository implements WorkoutRepository {
   Future<void> delete(int id) {
     final query = _db.delete(_db.workout)..where((row) => row.id.equals(id));
     return query.go();
+  }
+
+  @override
+  Stream<Workout?> watchById(int id) {
+    return (_db.select(_db.workout)
+      ..where((t) => t.id.equals(id)))
+        .watchSingleOrNull()
+        .map((row) => row != null ? _toWorkout(row) : null);
+  }
+
+  @override
+  Stream<List<WorkoutExerciseEntry>> watchExercises(int workoutId) {
+    final query = _db.select(_db.workoutExercise).join([
+      innerJoin(
+        _db.exercise,
+        _db.exercise.id.equalsExp(_db.workoutExercise.exerciseId),
+      ),
+    ])
+      ..where(_db.workoutExercise.workoutId.equals(workoutId))
+      ..orderBy([OrderingTerm.asc(_db.workoutExercise.plannedExerciseOrder)]);
+
+    return query.watch().map((rows) => rows.map((row) {
+      final we = row.readTable(_db.workoutExercise);
+      final ex = row.readTable(_db.exercise);
+      return WorkoutExerciseEntry(
+        workoutExerciseId: we.id,
+        exerciseId: ex.id,
+        exerciseName: ex.name,
+        plannedOrder: we.plannedExerciseOrder,
+      );
+    }).toList());
   }
 }
