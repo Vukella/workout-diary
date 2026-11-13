@@ -20,7 +20,6 @@ class AppTheme {
         onPrimary: Colors.white,
         surface: surface,
         onSurface: onSurface,
-        surfaceContainerHighest: surfaceVariant,
       ),
       appBarTheme: const AppBarTheme(
         backgroundColor: background,
