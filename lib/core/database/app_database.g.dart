@@ -1366,8 +1366,19 @@ class $WorkoutTable extends Workout with TableInfo<$WorkoutTable, WorkoutData> {
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _descriptionMeta = const VerificationMeta(
+    'description',
+  );
   @override
-  List<GeneratedColumn> get $columns => [id, name];
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+    'description',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, name, description];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -1391,6 +1402,15 @@ class $WorkoutTable extends Workout with TableInfo<$WorkoutTable, WorkoutData> {
     } else if (isInserting) {
       context.missing(_nameMeta);
     }
+    if (data.containsKey('description')) {
+      context.handle(
+        _descriptionMeta,
+        description.isAcceptableOrUnknown(
+          data['description']!,
+          _descriptionMeta,
+        ),
+      );
+    }
     return context;
   }
 
@@ -1408,6 +1428,10 @@ class $WorkoutTable extends Workout with TableInfo<$WorkoutTable, WorkoutData> {
         DriftSqlType.string,
         data['${effectivePrefix}name'],
       )!,
+      description: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}description'],
+      ),
     );
   }
 
@@ -1420,17 +1444,27 @@ class $WorkoutTable extends Workout with TableInfo<$WorkoutTable, WorkoutData> {
 class WorkoutData extends DataClass implements Insertable<WorkoutData> {
   final int id;
   final String name;
-  const WorkoutData({required this.id, required this.name});
+  final String? description;
+  const WorkoutData({required this.id, required this.name, this.description});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['name'] = Variable<String>(name);
+    if (!nullToAbsent || description != null) {
+      map['description'] = Variable<String>(description);
+    }
     return map;
   }
 
   WorkoutCompanion toCompanion(bool nullToAbsent) {
-    return WorkoutCompanion(id: Value(id), name: Value(name));
+    return WorkoutCompanion(
+      id: Value(id),
+      name: Value(name),
+      description: description == null && nullToAbsent
+          ? const Value.absent()
+          : Value(description),
+    );
   }
 
   factory WorkoutData.fromJson(
@@ -1441,6 +1475,7 @@ class WorkoutData extends DataClass implements Insertable<WorkoutData> {
     return WorkoutData(
       id: serializer.fromJson<int>(json['id']),
       name: serializer.fromJson<String>(json['name']),
+      description: serializer.fromJson<String?>(json['description']),
     );
   }
   @override
@@ -1449,15 +1484,26 @@ class WorkoutData extends DataClass implements Insertable<WorkoutData> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'name': serializer.toJson<String>(name),
+      'description': serializer.toJson<String?>(description),
     };
   }
 
-  WorkoutData copyWith({int? id, String? name}) =>
-      WorkoutData(id: id ?? this.id, name: name ?? this.name);
+  WorkoutData copyWith({
+    int? id,
+    String? name,
+    Value<String?> description = const Value.absent(),
+  }) => WorkoutData(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    description: description.present ? description.value : this.description,
+  );
   WorkoutData copyWithCompanion(WorkoutCompanion data) {
     return WorkoutData(
       id: data.id.present ? data.id.value : this.id,
       name: data.name.present ? data.name.value : this.name,
+      description: data.description.present
+          ? data.description.value
+          : this.description,
     );
   }
 
@@ -1465,42 +1511,59 @@ class WorkoutData extends DataClass implements Insertable<WorkoutData> {
   String toString() {
     return (StringBuffer('WorkoutData(')
           ..write('id: $id, ')
-          ..write('name: $name')
+          ..write('name: $name, ')
+          ..write('description: $description')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, name);
+  int get hashCode => Object.hash(id, name, description);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is WorkoutData && other.id == this.id && other.name == this.name);
+      (other is WorkoutData &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.description == this.description);
 }
 
 class WorkoutCompanion extends UpdateCompanion<WorkoutData> {
   final Value<int> id;
   final Value<String> name;
+  final Value<String?> description;
   const WorkoutCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
+    this.description = const Value.absent(),
   });
   WorkoutCompanion.insert({
     this.id = const Value.absent(),
     required String name,
+    this.description = const Value.absent(),
   }) : name = Value(name);
   static Insertable<WorkoutData> custom({
     Expression<int>? id,
     Expression<String>? name,
+    Expression<String>? description,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (name != null) 'name': name,
+      if (description != null) 'description': description,
     });
   }
 
-  WorkoutCompanion copyWith({Value<int>? id, Value<String>? name}) {
-    return WorkoutCompanion(id: id ?? this.id, name: name ?? this.name);
+  WorkoutCompanion copyWith({
+    Value<int>? id,
+    Value<String>? name,
+    Value<String?>? description,
+  }) {
+    return WorkoutCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      description: description ?? this.description,
+    );
   }
 
   @override
@@ -1512,6 +1575,9 @@ class WorkoutCompanion extends UpdateCompanion<WorkoutData> {
     if (name.present) {
       map['name'] = Variable<String>(name.value);
     }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
     return map;
   }
 
@@ -1519,7 +1585,8 @@ class WorkoutCompanion extends UpdateCompanion<WorkoutData> {
   String toString() {
     return (StringBuffer('WorkoutCompanion(')
           ..write('id: $id, ')
-          ..write('name: $name')
+          ..write('name: $name, ')
+          ..write('description: $description')
           ..write(')'))
         .toString();
   }
@@ -7176,10 +7243,12 @@ typedef $$ExerciseMuscleTableProcessedTableManager =
 typedef $$WorkoutTableCreateCompanionBuilder = WorkoutCompanion Function({
   Value<int> id,
   required String name,
+  Value<String?> description,
 });
 typedef $$WorkoutTableUpdateCompanionBuilder = WorkoutCompanion Function({
   Value<int> id,
   Value<String> name,
+  Value<String?> description,
 });
 
 final class $$WorkoutTableReferences
@@ -7259,6 +7328,11 @@ class $$WorkoutTableFilterComposer
 
   ColumnFilters<String> get name => $composableBuilder(
     column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get description => $composableBuilder(
+    column: $table.description,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -7356,6 +7430,11 @@ class $$WorkoutTableOrderingComposer
     column: $table.name,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$WorkoutTableAnnotationComposer
@@ -7372,6 +7451,11 @@ class $$WorkoutTableAnnotationComposer
 
   GeneratedColumn<String> get name =>
       $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => column,
+  );
 
   Expression<T> workoutLogRefs<T extends Object>(
     Expression<T> Function($$WorkoutLogTableAnnotationComposer a) f,
@@ -7482,11 +7566,18 @@ class $$WorkoutTableTableManager
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<String> name = const Value.absent(),
-          }) => WorkoutCompanion(id: id, name: name),
-          createCompanionCallback: ({
-            Value<int> id = const Value.absent(),
-            required String name,
-          }) => WorkoutCompanion.insert(id: id, name: name),
+            Value<String?> description = const Value.absent(),
+          }) => WorkoutCompanion(id: id, name: name, description: description),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required String name,
+                Value<String?> description = const Value.absent(),
+              }) => WorkoutCompanion.insert(
+                id: id,
+                name: name,
+                description: description,
+              ),
           withReferenceMapper: (p0) => p0
               .map(
                 (e) => (

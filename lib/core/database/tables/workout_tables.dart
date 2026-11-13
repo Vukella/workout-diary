@@ -7,6 +7,7 @@ import 'package:workout_diary/core/database/tables/routine_tables.dart';
 class Workout extends Table {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get name => text()();
+  TextColumn get description => text().nullable()();
 }
 
 class RoutineWorkout extends Table {

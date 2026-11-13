@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Workout {
 
- int get id; String get name;
+ int? get id; String get name; String? get description;
 /// Create a copy of Workout
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -27,20 +27,20 @@ $WorkoutCopyWith<Workout> get copyWith => _$WorkoutCopyWithImpl<Workout>(this as
 @override
 bool operator ==(Object other) {
   final _this = this as Workout;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Workout&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.name, _this.name) || other.name == _this.name));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Workout&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.description, _this.description) || other.description == _this.description));
 }
 
 
 @override
 int get hashCode {
   final _this = this as Workout;
-  return Object.hash(runtimeType,_this.id,_this.name);
+  return Object.hash(runtimeType,_this.id,_this.name,_this.description);
 }
 
 @override
 String toString() {
   final _this = this as Workout;
-  return 'Workout(id: ${_this.id}, name: ${_this.name})';
+  return 'Workout(id: ${_this.id}, name: ${_this.name}, description: ${_this.description})';
 }
 
 
@@ -51,7 +51,7 @@ abstract mixin class $WorkoutCopyWith<$Res>  {
   factory $WorkoutCopyWith(Workout value, $Res Function(Workout) _then) = _$WorkoutCopyWithImpl;
 @useResult
 $Res call({
- int id, String name
+ int? id, String name, String? description
 });
 
 
@@ -68,11 +68,12 @@ class _$WorkoutCopyWithImpl<$Res>
 
 /// Create a copy of Workout
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? name = null,Object? description = freezed,}) {
   return _then(Workout(
-id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,
+id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int?,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -157,10 +158,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String name)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int? id,  String name,  String? description)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Workout() when $default != null:
-return $default(_that.id,_that.name);case _:
+return $default(_that.id,_that.name,_that.description);case _:
   return orElse();
 
 }
@@ -178,10 +179,10 @@ return $default(_that.id,_that.name);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String name)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int? id,  String name,  String? description)  $default,) {final _that = this;
 switch (_that) {
 case _Workout():
-return $default(_that.id,_that.name);case _:
+return $default(_that.id,_that.name,_that.description);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -198,10 +199,10 @@ return $default(_that.id,_that.name);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String name)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int? id,  String name,  String? description)?  $default,) {final _that = this;
 switch (_that) {
 case _Workout() when $default != null:
-return $default(_that.id,_that.name);case _:
+return $default(_that.id,_that.name,_that.description);case _:
   return null;
 
 }
@@ -213,11 +214,12 @@ return $default(_that.id,_that.name);case _:
 
 
 class _Workout implements Workout {
-  const _Workout({required this.id, required this.name});
+  const _Workout({this.id, required this.name, this.description});
   
 
-@override final  int id;
+@override final  int? id;
 @override final  String name;
+@override final  String? description;
 
 /// Create a copy of Workout
 /// with the given fields replaced by the non-null parameter values.
@@ -229,18 +231,18 @@ _$WorkoutCopyWith<_Workout> get copyWith => __$WorkoutCopyWithImpl<_Workout>(thi
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Workout&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Workout&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description));
 }
 
 
 @override
 int get hashCode {
-    return Object.hash(runtimeType,id,name);
+    return Object.hash(runtimeType,id,name,description);
 }
 
 @override
 String toString() {
-    return 'Workout(id: $id, name: $name)';
+    return 'Workout(id: $id, name: $name, description: $description)';
 }
 
 
@@ -251,7 +253,7 @@ abstract mixin class _$WorkoutCopyWith<$Res> implements $WorkoutCopyWith<$Res> {
   factory _$WorkoutCopyWith(_Workout value, $Res Function(_Workout) _then) = __$WorkoutCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String name
+ int? id, String name, String? description
 });
 
 
@@ -268,11 +270,12 @@ class __$WorkoutCopyWithImpl<$Res>
 
 /// Create a copy of Workout
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? name = null,Object? description = freezed,}) {
   return _then(_Workout(
-id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,
+id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int?,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
