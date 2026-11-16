@@ -1,5 +1,5 @@
 import 'package:drift/drift.dart';
-import 'package:workout_diary/core/database/app_database.dart' hide Workout;
+import 'package:workout_diary/core/database/app_database.dart';
 import 'package:workout_diary/core/repositories/workout_repository.dart';
 import 'package:workout_diary/features/workout/data/workout.dart';
 import 'package:workout_diary/features/workout/data/workout_exercise_entry.dart';

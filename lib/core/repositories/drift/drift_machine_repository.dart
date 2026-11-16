@@ -1,5 +1,5 @@
 import 'package:drift/drift.dart';
-import 'package:workout_diary/core/database/app_database.dart' hide Machine;
+import 'package:workout_diary/core/database/app_database.dart';
 import 'package:workout_diary/core/repositories/machine_repository.dart';
 import '../../../features/machine/data/machine.dart';
 

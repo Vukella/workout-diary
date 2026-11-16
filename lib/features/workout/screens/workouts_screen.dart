@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:workout_diary/core/theme/app_theme.dart';
@@ -28,7 +28,7 @@ class WorkoutsScreen extends ConsumerWidget {
             : ListView.separated(
           padding: const EdgeInsets.all(16),
           itemCount: workouts.length,
-          separatorBuilder: (_, __) => const SizedBox(height: 10),
+          separatorBuilder: (_, _) => const SizedBox(height: 10),
           itemBuilder: (context, index) =>
               _WorkoutCard(workout: workouts[index]),
         ),

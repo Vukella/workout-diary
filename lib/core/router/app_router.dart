@@ -47,7 +47,7 @@ GoRouter appRouter(Ref ref) {
             ),
           ]),
         ],
-      ), // ← StatefulShellRoute ends here
+      ),
 
       GoRoute(
         path: '/workouts/create',

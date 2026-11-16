@@ -1,7 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:workout_diary/features/workout/data/workout.dart';
 import 'package:workout_diary/core/providers/workout_provider.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 part 'workouts_provider.g.dart';
 

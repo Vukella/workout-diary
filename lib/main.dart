@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:workout_diary/core/router/app_router.dart';
 import 'package:workout_diary/core/theme/app_theme.dart';
