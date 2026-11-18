@@ -8,6 +8,9 @@ import 'package:workout_diary/features/start/screens/start_screen.dart';
 import 'package:workout_diary/features/workout/screens/edit_workout_screen.dart';
 import 'package:workout_diary/features/workout/screens/workout_detail_screen.dart';
 import 'package:workout_diary/features/workout/screens/workouts_screen.dart';
+import '../../features/exercise/screens/create_exercise_screen.dart';
+import '../../features/exercise/screens/exercise_detail_screen.dart';
+import '../../features/exercise/screens/exercise_library_screen.dart';
 import '../../features/workout/data/workout.dart';
 import '../../features/workout/screens/create_workout_screen.dart';
 
@@ -68,8 +71,19 @@ GoRouter appRouter(Ref ref) {
         },
       ),
       GoRoute(
-        path: '/workouts/create',
-        builder: (context, state) => const CreateWorkoutScreen(),
+        path: '/exercises',
+        builder: (context, state) => const ExerciseLibraryScreen(),
+      ),
+      GoRoute(
+        path: '/exercises/create',
+        builder: (context, state) => const CreateExerciseScreen(),
+      ),
+      GoRoute(
+        path: '/exercises/:id',
+        builder: (context, state) {
+          final id = int.parse(state.pathParameters['id']!);
+          return ExerciseDetailScreen(exerciseId: id);
+        },
       ),
     ],
   );
