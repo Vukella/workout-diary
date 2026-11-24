@@ -10,4 +10,6 @@ abstract class WorkoutRepository {
 
   Stream<Workout?> watchById(int id);
   Stream<List<WorkoutExerciseEntry>> watchExercises(int workoutId);
+
+  Future<void> addExercise(int workoutId, int exerciseId);
 }

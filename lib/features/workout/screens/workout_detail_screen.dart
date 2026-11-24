@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:workout_diary/core/providers/workout_provider.dart';
 import 'package:workout_diary/core/theme/app_theme.dart';
 import '../providers/workout_detail_provider.dart';
+import 'add_exercise_sheet.dart';
 
 class WorkoutDetailScreen extends ConsumerWidget {
   final int workoutId;
@@ -38,6 +39,15 @@ class WorkoutDetailScreen extends ConsumerWidget {
     }
   }
 
+  void _showAddExerciseSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      builder: (_) => AddExerciseSheet(workoutId: workoutId),
+    );
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final workoutAsync = ref.watch(workoutDetailProvider(workoutId));
@@ -61,6 +71,10 @@ class WorkoutDetailScreen extends ConsumerWidget {
             onPressed: () => _confirmDelete(context, ref),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _showAddExerciseSheet(context),
+        child: const Icon(Icons.add),
       ),
       body: workoutAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),

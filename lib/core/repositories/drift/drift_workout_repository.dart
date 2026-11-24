@@ -73,4 +73,22 @@ class DriftWorkoutRepository implements WorkoutRepository {
       );
     }).toList());
   }
+
+  @override
+  Future<void> addExercise(int workoutId, int exerciseId) async {
+    final existing = await (_db.select(_db.workoutExercise)
+      ..where((row) => row.workoutId.equals(workoutId)))
+        .get();
+
+    final nextOrder = existing.fold<int>(
+        0, (prev, e) => e.plannedExerciseOrder > prev ? e.plannedExerciseOrder : prev) + 1;
+
+    await _db.into(_db.workoutExercise).insert(
+      WorkoutExerciseCompanion(
+        workoutId: Value(workoutId),
+        exerciseId: Value(exerciseId),
+        plannedExerciseOrder: Value(nextOrder),
+      ),
+    );
+  }
 }
